@@ -25,7 +25,9 @@ function App() {
             path="/movie/top-rated"
             element={<ListMovie movieType="movie top rated" />}
           />
-          <Route path="/movie/:movieId" element={<MovieDetail />} />
+          <Route path="/movie/*">
+            <Route path=":movieId" element={<MovieDetail />} />
+          </Route>
         </Routes>
       </Suspense>
     </div>

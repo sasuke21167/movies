@@ -13,10 +13,10 @@ const productApi = {
     const url = `/movie/top_rated${apiKey}`;
     return axiosClient.get(url, { params });
   },
-  // get: (id) => {
-  //   const url = `/products/${id}`;
-  //   return axiosClient.get(url);
-  // },
+  getMovieDetail: (id) => {
+    const url = `/movie/${id}${apiKey}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default productApi;

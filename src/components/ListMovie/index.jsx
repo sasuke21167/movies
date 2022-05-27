@@ -38,14 +38,14 @@ function ListMovie(props) {
     };
 
     fetchMovieList();
-  }, []);
+  }, [movieType]);
 
   return (
     <div>
       <Container>
         <Row className="movie-grid" gap={3}>
           {movieList.map((movie) => (
-            <Col key={movie.id} xs="12" md="6" lg="3" className="col-movie">
+            <Col key={movie.id} xs="12" md="6" lg="3" className="col-card">
               <CardMovie movie={movie} />
             </Col>
           ))}

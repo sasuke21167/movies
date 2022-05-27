@@ -1,13 +1,46 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Container, Navbar } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import "./Header.scss";
 
 Header.propTypes = {};
 
 function Header(props) {
   return (
-    <div>
-      <div>header</div>
-    </div>
+    <Navbar className="header" bg="light" expand="lg">
+      <Container>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "header__link header__link--active"
+              : "header__link"
+          }
+          to="/"
+        >
+          Movie
+        </NavLink>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "header__link header__link--active"
+              : "header__link"
+          }
+          to="/movie/now-playing"
+        >
+          Now Playing
+        </NavLink>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "header__link header__link--active"
+              : "header__link"
+          }
+          to="/movie/top-rated"
+        >
+          Top Rated
+        </NavLink>
+      </Container>
+    </Navbar>
   );
 }
 
