@@ -12,21 +12,21 @@ function MovieDetail(props) {
   const [movieDetail, setMovieDetail] = useState([]);
   let postImg = "";
   let backGroup = "";
+
   if (movieDetail.poster_path && movieDetail.backdrop_path) {
     postImg = `https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${movieDetail.poster_path}`;
     backGroup = `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/${movieDetail.backdrop_path}`;
   }
 
+  const fetchMovieDetail = async () => {
+    try {
+      const response = await movieApi.getMovieDetail(movieId);
+      setMovieDetail(response);
+    } catch (error) {
+      console.log("Failed to fetch product list", error);
+    }
+  };
   useEffect(() => {
-    const fetchMovieDetail = async () => {
-      try {
-        const response = await movieApi.getMovieDetail(movieId);
-        setMovieDetail(response);
-      } catch (error) {
-        console.log("Failed to fetch product list", error);
-      }
-    };
-
     fetchMovieDetail();
   }, [movieId]);
   // const postBackGround

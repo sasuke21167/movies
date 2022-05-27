@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import { Spinner } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header";
@@ -9,7 +10,7 @@ const ListMovie = React.lazy(() => import("./components/ListMovie"));
 function App() {
   return (
     <div className="movie-app">
-      <Suspense fallback={<div>Loading ...</div>}>
+      <Suspense fallback={<Spinner animation="border" variant="secondary" />}>
         <Header />
         <Routes>
           <Route path="/" element={<Navigate replace to="/movie" />} />

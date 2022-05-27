@@ -15,7 +15,8 @@ function Header(props) {
               ? "header__link header__link--active"
               : "header__link"
           }
-          to="/"
+          end
+          to="movie"
         >
           Movie
         </NavLink>
@@ -25,7 +26,7 @@ function Header(props) {
               ? "header__link header__link--active"
               : "header__link"
           }
-          to="/movie/now-playing"
+          to="movie/now-playing"
         >
           Now Playing
         </NavLink>
@@ -35,7 +36,7 @@ function Header(props) {
               ? "header__link header__link--active"
               : "header__link"
           }
-          to="/movie/top-rated"
+          to="movie/top-rated"
         >
           Top Rated
         </NavLink>
