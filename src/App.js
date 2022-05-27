@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import "./App.scss";
+import Header from "./components/Header";
+import MovieDetail from "./components/MovieDetail";
+
+const ListMovie = React.lazy(() => import("./components/ListMovie"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="movie-app">
+      <Suspense fallback={<div>Loading ...</div>}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/movie" />} />
+          <Route
+            path="/movie"
+            element={<ListMovie movieType="movie popular" />}
+          />
+          <Route
+            path="/movie/now-playing"
+            element={<ListMovie movieType="movie now playing" />}
+          />
+          <Route
+            path="/movie/top-rated"
+            element={<ListMovie movieType="movie top rated" />}
+          />
+          <Route path="/movie/:movieId" element={<MovieDetail />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
