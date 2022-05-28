@@ -2,13 +2,14 @@ import movieApi from "api/movieApi";
 import CardMovie from "components/CardMovie";
 import FiledMovie from "components/FieldMovie";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
   Col,
   Container,
   Form,
+  FormControl,
   Row,
   Spinner,
 } from "react-bootstrap";
@@ -27,6 +28,8 @@ function ListMovie(props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [checked, setChecked] = useState(false);
+  const [searchMovie, setSearchMovie] = useState("");
+  const [valueSearch, setValueSearch] = useState("");
 
   const fetchMovieList = async () => {
     try {
@@ -64,6 +67,31 @@ function ListMovie(props) {
   const handlecheckChange = () => {
     setChecked(!checked);
   };
+
+  useEffect(() => {
+    const fetchMovieSearchList = async (valueSearch) => {
+      try {
+        const params = {
+          page: 1,
+          query: valueSearch,
+        };
+        if ((valueSearch = "" || !valueSearch)) return;
+        const response = await movieApi.getMovieSearch(params);
+        setLoading(false);
+        setMovieList(response.results);
+      } catch (error) {
+        setError(error);
+        console.log("Failed to fetch product list", error);
+      }
+    };
+    fetchMovieSearchList(valueSearch);
+    setLoading(true);
+  }, [valueSearch]);
+
+  const handleSubmitSearch = (event) => {
+    event.preventDefault();
+    setValueSearch(searchMovie);
+  };
   return (
     <div>
       <Container>
@@ -73,6 +101,7 @@ function ListMovie(props) {
           refresh
         </Button>
         <br />
+
         <Form>
           <div className="mb-3">
             <Form.Check
@@ -83,6 +112,21 @@ function ListMovie(props) {
             />
           </div>
         </Form>
+
+        <Form className="d-flex mb-3" onSubmit={handleSubmitSearch}>
+          <FormControl
+            type="search"
+            placeholder="Search"
+            className="me-2 "
+            value={searchMovie}
+            onChange={(e) => setSearchMovie(e.target.value)}
+            aria-label="Search"
+          />
+          <Button type="submit" variant="outline-success">
+            Search
+          </Button>
+        </Form>
+
         {error && <Alert variant="danger">{error}</Alert>}
         {checked === false && (
           <Row className="movie-grid" gap={3}>

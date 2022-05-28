@@ -17,6 +17,10 @@ const productApi = {
     const url = `/movie/${id}${apiKey}`;
     return axiosClient.get(url);
   },
+  getMovieSearch: (params) => {
+    const url = `/search/movie${apiKey}`;
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default productApi;
