@@ -47,6 +47,9 @@
         min-height: 100%;
         border-width: 0px;
         outline: none;
+        &:hover {
+          opacity: 0.3;
+        }
       }
     }
     .poster-detail {

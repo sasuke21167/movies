@@ -1,8 +1,17 @@
 import movieApi from "api/movieApi";
 import CardMovie from "components/CardMovie";
+import FiledMovie from "components/FieldMovie";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import "./ListMovie.scss";
 
 ListMovie.propTypes = {
@@ -17,6 +26,7 @@ function ListMovie(props) {
   const [movieList, setMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [checked, setChecked] = useState(false);
 
   const fetchMovieList = async () => {
     try {
@@ -51,21 +61,45 @@ function ListMovie(props) {
   const handleRefesh = () => {
     window.location.reload();
   };
+  const handlecheckChange = () => {
+    setChecked(!checked);
+  };
   return (
     <div>
       <Container>
-        <Button variant="primary" onClick={handleRefesh}>
+        {loading && <Spinner animation="border" variant="primary" />}
+        <br />
+        <Button className="mb-2" variant="primary" onClick={handleRefesh}>
           refresh
         </Button>
-        {loading && <Spinner animation="border" variant="primary" />}
+        <br />
+        <Form>
+          <div className="mb-3">
+            <Form.Check
+              type="checkbox"
+              id="list"
+              label="list"
+              onChange={handlecheckChange}
+            />
+          </div>
+        </Form>
         {error && <Alert variant="danger">{error}</Alert>}
-        <Row className="movie-grid" gap={3}>
-          {movieList.map((movie) => (
-            <Col key={movie.id} xs="12" md="6" lg="3" className="col-card">
-              <CardMovie movie={movie} />
-            </Col>
-          ))}
-        </Row>
+        {checked === false && (
+          <Row className="movie-grid" gap={3}>
+            {movieList.map((movie) => (
+              <Col key={movie.id} xs="12" md="6" lg="3" className="col-card">
+                <CardMovie movie={movie} />
+              </Col>
+            ))}
+          </Row>
+        )}
+        {checked === true && (
+          <Container className="movie-field">
+            {movieList.map((movie) => (
+              <FiledMovie key={movie.id} movie={movie} />
+            ))}
+          </Container>
+        )}
       </Container>
     </div>
   );
